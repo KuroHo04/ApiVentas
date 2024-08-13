@@ -26,5 +26,11 @@ namespace ApiVentas.Controllers
             Productos.ProductosAgregados.Add(producto);
             return Ok();
         }
+
+        [HttpPut]
+        public ActionResult Actualizar([FromBody]Producto producto)
+        {
+            var productoEnLista = Productos.ProductosAgregados.FirstOrDefault(p => p.Id == producto.Id);
+        }
     }
 }
