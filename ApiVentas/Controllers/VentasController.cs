@@ -10,6 +10,7 @@ namespace ApiVentas.Controllers
         public VentasController()
         {
         }
+
         [HttpGet]
         public ActionResult<List<Venta>> ObtenerVentas()
         {
@@ -26,7 +27,6 @@ namespace ApiVentas.Controllers
         [HttpPut]
         public ActionResult Actualizar([FromBody] Venta venta)
         {
-            //LinQ
             var ventaEnLista = Ventas.VentasRealizadas
                 .FirstOrDefault(v => v.Id == venta.Id);
 
@@ -34,13 +34,15 @@ namespace ApiVentas.Controllers
             {
                 return NotFound();
             }
-            ventaEnLista.Clientes = venta.Clientes;
-            ventaEnLista.Productos = venta.Productos;
+
+            ventaEnLista.ClienteId = venta.ClienteId;
+            ventaEnLista.ProductoId = venta.ProductoId;
             ventaEnLista.Fecha = venta.Fecha;
             ventaEnLista.Total = venta.Total;
 
             return Ok();
         }
+
         [HttpDelete("{id:int}")]
         public ActionResult Eliminar(int id)
         {
@@ -51,6 +53,7 @@ namespace ApiVentas.Controllers
             {
                 return NotFound();
             }
+
             Ventas.VentasRealizadas.Remove(ventaEnLista);
             return Ok();
         }
